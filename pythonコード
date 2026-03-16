@@ -1,0 +1,64 @@
+#各種ライブラリの導入
+import pandas as pd
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+
+#データセットの読み込み
+df = pd.read_csv("student_performance_new.csv")
+
+
+#データセットのデータ数・型を確認
+df.info()
+
+
+#「grade」のデータ型を数値型に変換
+df["grade"] = df["grade"].astype(str).str.strip().str.upper()
+
+grade_map = {"A":4, "B":3, "C":2, "D":1, "F":0}
+df["grade"] = df["grade"].map(grade_map)
+
+df["grade"] = df["grade"].astype("float")
+
+
+#データの要約統計量を確認
+df.describe()
+
+
+#相関係数をヒートマップで表示
+correlation_matrix = df.corr()
+fig = px.imshow(correlation_matrix, text_auto=True, color_continuous_scale="RdBu_r")
+fig.update_layout(width=800,height=800)
+fig.show()
+
+
+#成績ごと、点数ごとにヒストグラムで表示
+fig = px.histogram(df, x="grade", nbins=5)
+fig.show()
+
+fig = px.histogram(df, x="total_score", nbins=30)
+fig.show()
+
+
+#成績ごとの平均学習時間および平均点の関係図
+score_df = df.groupby("grade")["weekly_self_study_hours"].mean().reset_index()
+sns.barplot(x="grade", y="weekly_self_study_hours", data=df)
+plt.ylabel("average_hours")
+plt.show()
+
+score_df = df.groupby("grade")["total_score"].mean().reset_index()
+sns.barplot(x="grade", y="total_score", data=df)
+plt.ylabel("average_score")
+plt.show()
+
+
+#学習時間と得点の散布図
+sns.regplot(x="weekly_self_study_hours", y="total_score", data=df, scatter_kws={"alpha": 0.1})
+plt.show()
+
+
+#授業の出席率と得点の散布図
+sns.regplot(x="attendance_percentage", y="total_score", data=df, scatter_kws={"alpha": 0.1})
+plt.show()
