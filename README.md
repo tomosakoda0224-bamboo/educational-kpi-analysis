@@ -3,6 +3,12 @@
 ## 概要
 pythonを用いた学習データの分析。学習効果（成績）に影響する要因を探索したプロジェクト。
 
+
+##使用データセット
+Kaggleにて「Student Performance Dataset」を使用
+https://www.kaggle.com/datasets/nabeelqureshitiii/student-performance-dataset
+
+
 ##使用技術
 Python
  pandas
@@ -10,13 +16,16 @@ Python
  plotly
  statsmodels
 
+
 ##分析内容
 ・生徒の成績の要因分析
+
 
 ##結果
 ・学習時間と得点、学習時間と成績に強い相関が見られた
 ・他はほとんど相関が見られなかった
 ・回帰分析の結果、週の学習時間が1時間増えると、得点が1.8点増えることが分かった
+
 
 ##提案
 ・上記の結果、「学習時間の確保」が成果（得点、成績）に大きく寄与すると判断し、学習量増加の提案をしていく。
